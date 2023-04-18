@@ -41,15 +41,61 @@
 <script type="text/javascript">
 
     var map = L.map('map', {
-            center: [39.905530, 116.391305],
+            center: [45.9132,126.713],
             zoom: 17
         });
 
     //添加底图
     L.tileLayer.chinaProvider('GaoDe.Normal.Map').addTo(map);
 
+    //http://10.7.15.1:8088/geoserver/baseData/wms?service=WMS&version=1.1.0&request=GetMap&layers=baseData:river&styles=&bbox={bbox-epsg-3857}&width=768&height=553&srs=EPSG:3857&format=image/png&TRANSPARENT=TRUE
+
+    // var wmsLayer = L.tileLayer.wms(
+    //     'http://10.7.15.1:8088/geoserver/baseData/wms?service=WMS&version=1.1.0&request=GetMap&styles=&bbox={bbox-epsg-3857}&width=768&height=553&srs=EPSG:3857&format=image/png&TRANSPARENT=TRUE', {
+    //         service:"WMS",
+    //         version: "1.1.0",
+    //         request:"GetMap",
+    //         bbox:"bbox-epsg-3857",
+    //         width:768,
+    //         height:553,
+    //         srs:"EPSG:3857",
+    //         format:"image/png",
+    //         transparent:true,
+    //         layers: 'baseData:river',
+    //     }
+    // );
+
+    // var wmsLayer = L.tileLayer.wms(
+    //     'http://10.7.15.1:8088/geoserver/baseData/wms', {
+    //         service:"WMS",
+    //         version: "1.1.0",
+    //         request:"GetMap",
+    //         bbox:"bbox-epsg-3857",
+    //         width:768,
+    //         height:553,
+    //         srs:"EPSG:3857",
+    //         format:"image/png",
+    //         transparent:true,
+    //         layers: 'baseData:river',
+    //     }
+    // );
+    var wmsLayer= L.tileLayer.wms("http://10.7.10.100:8088/geoserver/baseData/wms", {
+        layers: 'baseData:river',//需要加载的图层（geoserver发布时定义的名称）
+        format: 'image/png',//返回的数据格式（或image/jpeg）
+        transparent: true, //如果为true，WMS服务将返回具有透明性的图像
+        srs:"EPSG:3857",
+        //crs: L.CRS.EPSG4326   //用于WMS请求的坐标参考系统，默认情况下映射CRS（没有特殊要求可以不填，如果需要填写要和geoserver发布时设置的一致）
+    });
+
+    // var wmsLayer = L.tileLayer.wms(
+    //     'http://10.7.15.1:8088/geoserver/baseData/wms?service=WMS&request=GetMap&layers=baseData:river&styles=&bbox=bbox-epsg-3857&width=768&height=553&srs=EPSG:3857&format=image/png&TRANSPARENT=TRUE',{
+    //         version: "1.1.0",
+    //     }
+    // );
+    wmsLayer.addTo(map)
+
     //设置参照物
-    L.marker([39.905530,116.391305]).addTo(map).bindPopup('<p>我是WGS84坐标下，天安门广场国旗所在位置</p>').openPopup();
+    L.marker([45.9132,126.713]).addTo(map).bindPopup('<p>我是WGS84坐标下，天安门广场国旗所在位置</p>').openPopup();
 
 </script>
 
